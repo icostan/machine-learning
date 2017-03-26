@@ -2,6 +2,9 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
 
+tf.logging.set_verbosity(tf.logging.INFO)
+
+
 def weight_variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
     return tf.Variable(initial)
