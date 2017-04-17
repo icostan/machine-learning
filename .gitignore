@@ -89,3 +89,4 @@ ENV/
 .ropeproject
 
 /MNIST_data/
+/.DS_Store
