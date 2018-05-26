@@ -1,0 +1,115 @@
+data:
+  dataset: {name: Data Science Bowl 2017 256x512x512_segmented_full_scan, samples: 1397,
+    type: private}
+  datasetLoadOption: batch
+  kfold: 1
+  mapping:
+    cancer:
+      options: {}
+      port: OutputPort0
+      type: Categorical
+    id:
+      options: {Normalization: false, Scaling: 1}
+      port: InputPort0
+      type: Numpy
+  numPorts: 1
+  samples: {split: 1, test: 279, training: 838, validation: 279}
+  shuffle: true
+model:
+  connections:
+  - {source: MaxPooling3D_2, target: SpatialDropout3D_1}
+  - {source: MaxPooling3D_1, target: Convolution3D_1}
+  - {source: Convolution3D_3, target: Convolution3D_4}
+  - {source: Convolution3D_4, target: MaxPooling3D_3}
+  - {source: Convolution3D_1, target: Convolution3D_2}
+  - {source: GlobalMaxPooling3D_1, target: Dense_3}
+  - {source: SpatialDropout3D_2, target: GlobalMaxPooling3D_1}
+  - {source: Input_1, target: MaxPooling3D_1}
+  - {source: SpatialDropout3D_1, target: Convolution3D_3}
+  - {source: MaxPooling3D_3, target: SpatialDropout3D_2}
+  - {source: Convolution3D_2, target: MaxPooling3D_2}
+  - {source: Dense_3, target: Dense_1}
+  - {source: Dense_1, target: Output_1}
+  layers:
+  - args: {}
+    class: Input
+    name: Input_1
+    x: 41
+    y: 60
+  - args: {}
+    class: Output
+    name: Output_1
+    x: 240
+    y: 992
+  - args: {activation: softmax, output_dim: '2'}
+    class: Dense
+    name: Dense_1
+    x: 240
+    y: 891
+  - args: {pool_size: '(1,3,3)'}
+    class: MaxPooling3D
+    name: MaxPooling3D_1
+    x: 41
+    y: 172
+  - args: {pool_size: '(2,2,2)'}
+    class: MaxPooling3D
+    name: MaxPooling3D_2
+    x: 42
+    y: 529
+  - args: {activation: relu, kernel_dim1: '5', kernel_dim2: '5', kernel_dim3: '5',
+      nb_filter: '10'}
+    class: Convolution3D
+    name: Convolution3D_1
+    x: 41
+    y: 290
+  - args: {activation: relu, kernel_dim1: '5', kernel_dim2: '5', kernel_dim3: '5',
+      nb_filter: '10'}
+    class: Convolution3D
+    name: Convolution3D_2
+    x: 42
+    y: 406
+  - args: {activation: relu, kernel_dim1: '3', kernel_dim2: '3', kernel_dim3: '3',
+      nb_filter: '20'}
+    class: Convolution3D
+    name: Convolution3D_3
+    x: 376
+    y: 176
+  - args: {activation: relu, kernel_dim1: '3', kernel_dim2: '3', kernel_dim3: '3',
+      nb_filter: '20'}
+    class: Convolution3D
+    name: Convolution3D_4
+    x: 377
+    y: 290
+  - args: {p: '0.5'}
+    class: SpatialDropout3D
+    name: SpatialDropout3D_1
+    x: 43
+    y: 641
+  - args: {p: '0.5'}
+    class: SpatialDropout3D
+    name: SpatialDropout3D_2
+    x: 378
+    y: 526
+  - args: {pool_size: '(2,2,2)'}
+    class: MaxPooling3D
+    name: MaxPooling3D_3
+    x: 379
+    y: 409
+  - args: {}
+    class: GlobalMaxPooling3D
+    name: GlobalMaxPooling3D_1
+    x: 379
+    y: 640
+  - args: {activation: relu, output_dim: '10'}
+    class: Dense
+    name: Dense_3
+    x: 238
+    y: 789
+params:
+  advance_params: true
+  batch_size: 1
+  is_custom_loss: false
+  loss_func: categorical_crossentropy
+  num_epoch: 2
+  optimizer: {name: Adadelta}
+project: Data Science Bowl 2017
