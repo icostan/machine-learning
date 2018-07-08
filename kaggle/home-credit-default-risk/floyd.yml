@@ -1,0 +1,11 @@
+machine: cpu
+input:
+  - icostan/datasets/home-credit-default-risk/1:input
+env: tensorflow-1.8
+description:
+command: python home-credit-default-risk.py
+
+task:
+  train:
+    machine: cpu
+    command: python home-credit-default-risk.py
